@@ -1,8 +1,10 @@
 "use static";
 
+const players = require('../../registry/PlayerRegistry');
+
 function disconnectHandler() {
-    console.log('----------------------------------');
-	console.log("player " + this._socket.id +  " disconnected");
+    players.erase(players.getBySocketId(this._socket.id));
+    console.log(players);
 }
 
 module.exports = disconnectHandler;

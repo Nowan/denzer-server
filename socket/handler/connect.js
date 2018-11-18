@@ -1,8 +1,13 @@
 "use static";
 
+const Player = require('../../structure/Player');
+const players = require('../../registry/PlayerRegistry');
+
 function connectHandler() {
-    console.log('----------------------------------');
-	console.log("player " + this._socket.id +  " connected");
+    const player = new Player(this._socket.id);
+    players.store(player);
+
+    console.log(players);
 }
 
 module.exports = connectHandler;
