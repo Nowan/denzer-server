@@ -5,9 +5,14 @@ const rooms = require('../../registry/RoomRegistry');
 
 function disconnectHandler() {
     const player = players.searchBySocketId(this._socket.id);
-    players.erase(player);
+    
+    if (player.hasRoom()) {
+        this._socket.leave(player.room.id);
+        this._socket.to(player.room.id).emit("player disconnect", {playerId: player.socketID});
+    }
 
     evict(player);
+    players.erase(player);
 
     console.log(rooms);
 }

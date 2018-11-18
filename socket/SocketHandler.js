@@ -1,5 +1,6 @@
 "use strict";
 
+//const roomBroadcast = require("./roomBroadcast");
 const handlers = {
 	connect: require("./handler/connect"),
 	disconnect: require("./handler/disconnect")
@@ -8,6 +9,7 @@ const handlers = {
 class SocketHandler {
 	constructor(socket) {
 		this._socket = socket;
+
 		this._registerHandlers();
 		
 		handlers.connect.call(this);

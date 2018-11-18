@@ -12,6 +12,9 @@ function connectHandler() {
     
     accomodate(player);
 
+    this._socket.to(player.room.id).emit("player connect", {playerId: player.socketID});
+    this._socket.join(player.room.id);
+
     console.log(rooms);
 }
 
