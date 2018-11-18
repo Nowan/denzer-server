@@ -15,5 +15,5 @@ server.listen(PORT, () => {
 	console.log("Server running at " + IP_ADDRESS + ":" + PORT);
 });
 
-const SocketHandler = require('./SocketHandler');
+const SocketHandler = require('./socket/SocketHandler');
 io.on('connection', SocketHandler.create);
