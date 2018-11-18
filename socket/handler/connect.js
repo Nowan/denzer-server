@@ -15,6 +15,8 @@ function connectHandler() {
     this._socket.to(player.room.id).emit("player connect", {playerId: player.socketID});
     this._socket.join(player.room.id);
 
+    this._socket.emit("connection established", {data: "hurray!"});
+
     console.log(rooms);
 }
 
