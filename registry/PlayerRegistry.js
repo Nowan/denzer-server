@@ -1,8 +1,10 @@
 "use strict";
 
-class PlayerRegistry {
-    constructor() {
+const Registry = require("./Registry");
 
+class PlayerRegistry extends Registry {
+    constructor() {
+        super();
     }
 
     store(player) {
@@ -13,7 +15,7 @@ class PlayerRegistry {
         delete this[player.socketID];
     }
 
-    getBySocketId(socketID) {
+    searchBySocketId(socketID) {
         return this[socketID];
     }
 }
