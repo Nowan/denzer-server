@@ -1,9 +1,9 @@
 "use strict";
 
-//const roomBroadcast = require("./roomBroadcast");
 const handlers = {
 	connect: require("./handler/connect"),
-	disconnect: require("./handler/disconnect")
+	disconnect: require("./handler/disconnect"),
+	findRoom: require("./handler/findRoom")
 }
 
 class SocketHandler {
@@ -21,6 +21,7 @@ class SocketHandler {
 
 	_registerHandlers() {
 		this._socket.on("disconnect", handlers.disconnect.bind(this));
+		this._socket.on("find_room", handlers.findRoom.bind(this));
 	}
 }
 

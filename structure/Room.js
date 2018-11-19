@@ -1,11 +1,13 @@
 "use strict";
 
-const uuid = require('uuid/v4');
+const uuid = require("uuid/v4");
+const Map = require("../map/Map.js");
 
 class Room {
     constructor() {
         this.id = uuid();
         this.players = [];
+        this.map = new Map();
         
         this._capacity = 8;
     }
