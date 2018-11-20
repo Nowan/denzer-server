@@ -4,6 +4,9 @@ class Player {
     constructor(socketID) {
         this.socketID = socketID;
         this.room = null;
+        
+        this.x = 0;
+        this.y = 0;
     }
 
     enterRoom(room) {
@@ -18,6 +21,18 @@ class Player {
 
     hasRoom() {
         return !!this.room;
+    }
+
+    setPosition(x, y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    toJson() {
+        return {
+            id: this.socketID,
+            position: [0, 0]
+        };
     }
 }
 

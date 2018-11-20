@@ -9,11 +9,14 @@ function findRoomHandler() {
     const player = players.searchBySocketId(this._socket.id);
     
     accomodate(player);
+    establishPosition(player);
 
-    this._socket.to(player.room.id).emit("player enter", {playerId: player.socketID});
-    this._socket.join(player.room.id);
+    const room = player.room;
 
-    this._socket.emit("room found", {map: player.room.map});
+    this._socket.to(room.id).emit("player enter", {playerId: player.socketID});
+    this._socket.join(room.id);
+
+    this._socket.emit("room found", room.toJson());
 }
 
 function accomodate(player) {
@@ -23,6 +26,28 @@ function accomodate(player) {
         rooms.store(room);
     }
     player.enterRoom(room);
+}
+
+function establishPosition(player) {
+    const room = player.room;
+    const otherPlayers = room.players.filter((playerInRoom) => { return playerInRoom !== player; });
+    const spawnPoint = getMostDesertedSpawnPoint(room.map.spawnPoints, otherPlayers);
+    player.setPosition(spawnPoint.x, spawnPoint.y);
+}
+
+function getMostDesertedSpawnPoint(spawnPoints, players) {
+    const desertionFactors = spawnPoints.map((spawnPoint) => {
+        return players.reduce((desertionFactor, player) => {
+            return desertionFactor + Math.sqrt(Math.pow(player.x - spawnPoint.x, 2) + Math.pow(player.y - spawnPoint.y, 2));
+        }, 0);
+    });
+    return spawnPoints[indexOfMax(desertionFactors)];
+}
+
+function indexOfMax(array) {
+    return array.reduce((maxIndex, value, index, array) => {
+        return array[maxIndex] > value ? maxIndex : index;
+    }, 0);
 }
 
 module.exports = findRoomHandler;

@@ -27,6 +27,13 @@ class Room {
     evict(player) {
         this.players.splice(this.players.indexOf(player), 1);
     }
+
+    toJson() {
+        return {
+            map: this.map,
+            players: this.players.map((player) => { return player.toJson(); })
+        }
+    }
 }
 
 module.exports = Room;
