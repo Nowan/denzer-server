@@ -13,7 +13,7 @@ function findRoomHandler() {
 
     const room = player.room;
 
-    this._socket.to(room.id).emit("player enter", {playerId: player.socketID});
+    this._socket.to(room.id).emit("player enter", {player: player.toJson()});
     this._socket.join(room.id);
 
     this._socket.emit("room found", room.toJson());

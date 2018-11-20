@@ -8,7 +8,7 @@ function disconnectHandler() {
     
     if (player.hasRoom()) {
         this._socket.leave(player.room.id);
-        this._socket.to(player.room.id).emit("player exit", {playerId: player.socketID});
+        this._socket.to(player.room.id).emit("player exit", {player: player.toJson()});
     }
 
     evict(player);
