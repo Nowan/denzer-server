@@ -31,7 +31,10 @@ class Player {
     toJson() {
         return {
             id: this.socketID,
-            position: [0, 0]
+            position: {
+                x: this.x, 
+                y: this.y
+            }
         };
     }
 }
