@@ -39,9 +39,9 @@ class Player {
             id: this.socketID,
             position: {
                 x: this.x,
-                y: this.y,
-                velocity: {x: this.velocity.x, y: this.velocity.y}
-            }
+                y: this.y
+            },
+            velocity: {x: this.velocity.x, y: this.velocity.y}
         };
     }
 }
