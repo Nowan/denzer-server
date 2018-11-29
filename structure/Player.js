@@ -7,6 +7,7 @@ class Player {
         
         this.x = 0;
         this.y = 0;
+        this.velocity = {x: 0, y: 0};
     }
 
     enterRoom(room) {
@@ -28,12 +29,18 @@ class Player {
         this.y = y;
     }
 
+    setVelocity(x, y) {
+        this.velocity.x = x;
+        this.velocity.y = y;
+    }
+
     toJson() {
         return {
             id: this.socketID,
             position: {
-                x: this.x, 
-                y: this.y
+                x: this.x,
+                y: this.y,
+                velocity: {x: this.velocity.x, y: this.velocity.y}
             }
         };
     }
