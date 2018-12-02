@@ -1,4 +1,4 @@
-"use static";
+"use strict";
 
 const Player = require('../../structure/Player');
 
