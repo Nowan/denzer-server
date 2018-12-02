@@ -1,9 +1,10 @@
 "use strict";
 
 class Player {
-    constructor(socketID) {
+    constructor(socketID, timeProbe) {
         this.socketID = socketID;
         this.room = null;
+        this._timeDifference = Date.now() - timeProbe;
         
         this.x = 0;
         this.y = 0;
