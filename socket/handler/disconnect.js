@@ -7,8 +7,7 @@ function disconnectHandler() {
     const player = this._player;
     
     if (player.hasRoom()) {
-        this._socket.leave(player.room.id);
-        this._socket.to(player.room.id).emit("player exit", {player: player.toJson()});
+        this._socket.broadcast.emit("player_leave", player.toJson());
     }
 
     evict(player);
@@ -16,6 +15,8 @@ function disconnectHandler() {
 
     this._player = null;
     this._socket = null;
+
+    console.log("Player " + player.id + " disconnected");
 }
 
 function evict(player) {

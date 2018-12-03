@@ -4,13 +4,12 @@ const Player = require('../../structure/Player');
 
 const players = require('../../registry/PlayerRegistry');
 
-function connectHandler() {
-    const query = this._socket.handshake.query;
+function connectHandler(socket) {
+    this._player = players.searchByID(socket.handshake.query.playerID);
+    this._socket = socket;
 
-    this._player = new Player(this._socket.id, query.timeProbe);
-    players.store(this._player);
-    
-    this._socket.emit("connection established");
+    this._socket.broadcast.emit("player_join", this._player.toJson())
+    console.log("Player " + this._player.id + " established socket connection");
 }
 
 module.exports = connectHandler;

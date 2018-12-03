@@ -1,23 +1,26 @@
 "use strict";
 
-const Room = require('../../../structure/Room');
-const rooms = require('../../../registry/RoomRegistry');
+const Room = require("../../structure/Room");
+const SocketHandler = require("../../socket/SocketHandler");
+
+const globals = require("../../globals");
+const rooms = require("../../registry/RoomRegistry");
 
 function createRoom() {
     const room = new Room();
     
-    /*
+    room.channel = globals.io.of("/" + room.id);
+    room.channel.on("connection", SocketHandler.create);
+    
     const SYNC_FREQUENCY = 500;
     let elapsedTime = 0;
     
     room.syncInterval = setInterval(() => {
-        console.log(room.players.length);
         elapsedTime += SYNC_FREQUENCY;
         room.physics.updateState(elapsedTime);
-        this._socket.to(room.id).emit("state_update", composePlayersData(room));
+        room.channel.emit("state_update", composePlayersData(room));
     }, SYNC_FREQUENCY);
-    */
-   
+  
     rooms.store(room);
     return room;
 }
@@ -25,7 +28,7 @@ function createRoom() {
 function composePlayersData(room) {
     const playersData = {};
     room.players.forEach((player) => {
-        playersData[player.socketID] = player.toJson()
+        playersData[player.id] = player.toJson()
     });
     return playersData;
 }

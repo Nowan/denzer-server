@@ -8,15 +8,15 @@ class PlayerRegistry extends Registry {
     }
 
     store(player) {
-        this[player.socketID] = player;
+        this[player.id] = player;
     }
 
     erase(player) {
-        delete this[player.socketID];
+        delete this[player.id];
     }
 
-    searchBySocketId(socketID) {
-        return this[socketID];
+    searchByID(playerID) {
+        return this[playerID];
     }
 }
 

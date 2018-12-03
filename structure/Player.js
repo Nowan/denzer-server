@@ -1,16 +1,12 @@
 "use strict";
 
+const uuid = require("uuid/v4");
+
 class Player {
-    constructor(socketID, timeProbe) {
-        this.socketID = socketID;
+    constructor() {
+        this.id = uuid();
         this.room = null;
         this.body = null;
-        
-        this._timeDifference = Date.now() - timeProbe;
-        
-        this.x = 0;
-        this.y = 0;
-        this.velocity = {x: 0, y: 0};
     }
 
     enterRoom(room) {
@@ -28,26 +24,17 @@ class Player {
     }
 
     setPosition(x, y) {
-        this.x = x;
-        this.y = y;
+        this.body.x = x;
+        this.body.y = y;
     }
 
     setVelocity(x, y) {
-        this.velocity.x = x;
-        this.velocity.y = y;
+        this.body.velocity.x = x;
+        this.body.velocity.y = y;
     }
 
     toJson() {
-        return [this.socketID, this.body.x, this.body.y, this.body.velocity.x, this.body.velocity.y];
-        /*
-        return {
-            id: this.socketID,
-            position: {
-                x: this.body.x,
-                y: this.body.y
-            },
-            velocity: {x: this.velocity.x, y: this.velocity.y}
-        };*/
+        return [this.id, this.body.x, this.body.y, this.body.velocity.x, this.body.velocity.y];
     }
 }
 

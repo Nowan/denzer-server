@@ -33,6 +33,7 @@ class Room {
 
     toJson() {
         return {
+            id: this.id,
             map: this.map,
             players: this.players.map((player) => { return player.toJson(); })
         }

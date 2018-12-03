@@ -5,10 +5,8 @@ class Routine {
         this.endpoint = "/";
     }
 
-    async run() {
-        return new Promise((resolve, reject) => {
-            resolve({});
-        });
+    async run(request) {
+        return {};
     }
 }
 
