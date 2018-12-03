@@ -4,6 +4,8 @@ class Player {
     constructor(socketID, timeProbe) {
         this.socketID = socketID;
         this.room = null;
+        this.body = null;
+        
         this._timeDifference = Date.now() - timeProbe;
         
         this.x = 0;
@@ -36,14 +38,16 @@ class Player {
     }
 
     toJson() {
+        return [this.socketID, this.body.x, this.body.y, this.body.velocity.x, this.body.velocity.y];
+        /*
         return {
             id: this.socketID,
             position: {
-                x: this.x,
-                y: this.y
+                x: this.body.x,
+                y: this.body.y
             },
             velocity: {x: this.velocity.x, y: this.velocity.y}
-        };
+        };*/
     }
 }
 

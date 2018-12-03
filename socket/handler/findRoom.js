@@ -1,31 +1,20 @@
 "use strict";
 
-const Room = require('../../structure/Room');
-
-const players = require('../../registry/PlayerRegistry');
+const createRoom = require('./room/createRoom');
 const rooms = require('../../registry/RoomRegistry');
 
 function findRoomHandler() {
-    const player = players.searchBySocketId(this._socket.id);
+    const player = this._player;
     
-    accomodate(player);
-    establishPosition(player);
+    const room = rooms.findAvailable() || createRoom.call(this);
+    player.enterRoom(room);
 
-    const room = player.room;
+    //establishPosition(player);
 
     this._socket.to(room.id).emit("player enter", {player: player.toJson()});
     this._socket.join(room.id);
 
     this._socket.emit("room found", room.toJson());
-}
-
-function accomodate(player) {
-    let room = rooms.findAvailable();
-    if (!room) {
-        room = new Room();
-        rooms.store(room);
-    }
-    player.enterRoom(room);
 }
 
 function establishPosition(player) {

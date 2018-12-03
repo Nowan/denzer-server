@@ -1,14 +1,16 @@
 "use strict";
 
 const uuid = require("uuid/v4");
-const Map = require("../map/Map.js");
+const Map = require("../map/Map");
+const PhysicsSandbox = require("../physics/PhysicsSandbox");
 
 class Room {
     constructor() {
         this.id = uuid();
         this.players = [];
         this.map = new Map();
-        
+        this.physics = new PhysicsSandbox();
+
         this._capacity = 8;
     }
 
@@ -22,6 +24,7 @@ class Room {
 
     accommodate(player) {
         this.players.push(player);
+        player.body = this.physics.addBody(player);
     }
 
     evict(player) {
